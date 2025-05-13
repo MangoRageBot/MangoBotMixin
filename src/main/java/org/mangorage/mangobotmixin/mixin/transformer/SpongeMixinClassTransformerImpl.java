@@ -1,21 +1,34 @@
-package org.mangorage.mangobotmixin.mixin;
+package org.mangorage.mangobotmixin.mixin.transformer;
 
 import org.mangorage.bootstrap.api.transformer.IClassTransformer;
 import org.mangorage.bootstrap.api.transformer.TransformResult;
 import org.mangorage.bootstrap.api.transformer.TransformerFlag;
-import org.mangorage.mangobotmixin.mixin.transformer.MangoBotTransformer;
+import org.mangorage.mangobotmixin.mixin.SpongeMixinImpl;
 import org.spongepowered.asm.mixin.MixinEnvironment;
 
-public class SpongeMixinTransformer implements IClassTransformer {
+import java.util.List;
 
-    public SpongeMixinTransformer() {
+public final class SpongeMixinClassTransformerImpl implements IClassTransformer {
+
+    private final List<String> blacklisted = List.of(
+            "java.",
+            "org.spongepowered",
+            "org.objectweb"
+    );
+
+    public SpongeMixinClassTransformerImpl() {
         SpongeMixinImpl.load();
     }
 
     @Override
     public TransformResult transform(String name, byte[] bytes) {
-        var transformer = MangoBotTransformer.getInstance().getTransformer();
+        for (String s : blacklisted) {
+            if (name.startsWith(s)) {
+                return new TransformResult(null, TransformerFlag.NO_REWRITE);
+            }
+        }
 
+        var transformer = SpongeMixinImpl.getTransformer();
 
         var transformed = transformer.transformClass(
                 MixinEnvironment.getCurrentEnvironment(),

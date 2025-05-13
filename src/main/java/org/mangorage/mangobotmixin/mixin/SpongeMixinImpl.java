@@ -1,41 +1,54 @@
 package org.mangorage.mangobotmixin.mixin;
 
-import org.mangorage.mangobotmixin.mixin.core.MangoBotMixinBootstrap;
-import org.mangorage.mangobotmixin.mixin.core.MixinServiceMangoBot;
-import org.mangorage.mangobotmixin.mixin.transformer.MangoBotTransformer;
+import org.mangorage.mangobotmixin.mixin.core.MangoBotMixinBootstrapImpl;
+import org.mangorage.mangobotmixin.mixin.core.MangoBotMixinServiceImpl;
 
 import org.spongepowered.asm.launch.MixinBootstrap;
 import org.spongepowered.asm.mixin.MixinEnvironment;
-import org.spongepowered.asm.mixin.Mixins;
+import org.spongepowered.asm.mixin.transformer.IMixinTransformer;
+import org.spongepowered.asm.mixin.transformer.IMixinTransformerFactory;
 
 import java.lang.reflect.Method;
 
 public final class SpongeMixinImpl {
-    private static final SpongeMixinImpl INSTANCE = new SpongeMixinImpl();
+    private static boolean loaded = false;
+    private static IMixinTransformerFactory factory;
+    private static IMixinTransformer transformer;
 
-    public static void load() {}
+    public static void setFactory(IMixinTransformerFactory factory) {
+        if (SpongeMixinImpl.factory != null) return;
+        SpongeMixinImpl.factory = factory;
+    }
 
-    SpongeMixinImpl() {
+    public static void prepare() {
+        if (SpongeMixinImpl.transformer != null) return;
+        SpongeMixinImpl.transformer = factory.createTransformer();
+    }
+
+    public static IMixinTransformer getTransformer() {
+        return transformer;
+    }
+
+    public static void load() {
+        if (loaded) return;
+        loaded = true;
+
         // Load
 //        System.setProperty("mixin.debug.verbose", "true");
 //        System.setProperty("mixin.debug", "true");
 //        System.setProperty("mixin.env.disableRefMap", "true");
 //        System.setProperty("mixin.checks", "true");
 
-        System.setProperty("mixin.bootstrapService", MangoBotMixinBootstrap.class.getName());
-        System.setProperty("mixin.service", MixinServiceMangoBot.class.getName());
+        System.setProperty("mixin.bootstrapService", MangoBotMixinBootstrapImpl.class.getName());
+        System.setProperty("mixin.service", MangoBotMixinServiceImpl.class.getName());
         System.setProperty("mixin.env.remapRefMap", "false");
 
         MixinBootstrap.init();
 
-        Mixins.addConfiguration("mangobotcore.mixins.json");
-
         completeMixinBootstrap();
-
-        // Mixin Extras Init
     }
 
-    private void completeMixinBootstrap() {
+    private static void completeMixinBootstrap() {
         // Move to the default phase.
         try {
             final Method method = MixinEnvironment.class.getDeclaredMethod("gotoPhase", MixinEnvironment.Phase.class);
@@ -45,8 +58,7 @@ public final class SpongeMixinImpl {
         } catch(final Exception exception) {
             exception.printStackTrace();
         }
-
-        MangoBotTransformer.getInstance().load();
+        prepare();
     }
 }
 

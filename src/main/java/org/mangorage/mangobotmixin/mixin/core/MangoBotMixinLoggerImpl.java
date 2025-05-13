@@ -1,4 +1,4 @@
-package org.mangorage.mangobotmixin.mixin;
+package org.mangorage.mangobotmixin.mixin.core;
 
 import org.spongepowered.asm.logging.ILogger;
 import org.spongepowered.asm.logging.Level;
@@ -7,14 +7,14 @@ import org.spongepowered.asm.logging.LoggerAdapterAbstract;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class MixinLogger extends LoggerAdapterAbstract {
+public class MangoBotMixinLoggerImpl extends LoggerAdapterAbstract {
     private static final Map<String, ILogger> LOGGER_MAP = new ConcurrentHashMap<>();
 
     public static ILogger get(String name) {
-        return LOGGER_MAP.computeIfAbsent(name, MixinLogger::new);
+        return LOGGER_MAP.computeIfAbsent(name, MangoBotMixinLoggerImpl::new);
     }
 
-    protected MixinLogger(String id) {
+    protected MangoBotMixinLoggerImpl(String id) {
         super(id);
     }
 

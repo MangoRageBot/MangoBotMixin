@@ -2,9 +2,7 @@ package org.mangorage.mangobotmixin.mixin.core;
 
 import org.jetbrains.annotations.NotNull;
 import org.mangorage.bootstrap.api.loader.MangoLoader;
-import org.mangorage.mangobotmixin.mixin.MixinContainer;
-import org.mangorage.mangobotmixin.mixin.MixinLogger;
-import org.mangorage.mangobotmixin.mixin.transformer.MangoBotTransformer;
+import org.mangorage.mangobotmixin.mixin.SpongeMixinImpl;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
@@ -29,9 +27,9 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.List;
 
-public final class MixinServiceMangoBot implements IMixinService, IClassProvider, IClassBytecodeProvider, ITransformerProvider, IClassTracker {
+public final class MangoBotMixinServiceImpl implements IMixinService, IClassProvider, IClassBytecodeProvider, ITransformerProvider, IClassTracker {
     private final ReEntranceLock lock = new ReEntranceLock(1);
-    private final MixinContainer container = new MixinContainer("mangobot");
+    private final MangoBotMixinContainerImpl container = new MangoBotMixinContainerImpl("mangobot");
 
     @Override
     public String getName() {
@@ -56,7 +54,7 @@ public final class MixinServiceMangoBot implements IMixinService, IClassProvider
     @Override
     public void offer(IMixinInternal iMixinInternal) {
         if (iMixinInternal instanceof IMixinTransformerFactory factory) {
-            MangoBotTransformer.getInstance().set(factory, container);
+            SpongeMixinImpl.setFactory(factory);
         }
     }
 
@@ -142,7 +140,7 @@ public final class MixinServiceMangoBot implements IMixinService, IClassProvider
 
     @Override
     public ILogger getLogger(String s) {
-        return MixinLogger.get(s);
+        return MangoBotMixinLoggerImpl.get(s);
     }
 
     @Override

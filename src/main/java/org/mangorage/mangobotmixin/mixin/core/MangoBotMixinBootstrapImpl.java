@@ -2,7 +2,7 @@ package org.mangorage.mangobotmixin.mixin.core;
 
 import org.spongepowered.asm.service.IMixinServiceBootstrap;
 
-public final class MangoBotMixinBootstrap implements IMixinServiceBootstrap {
+public final class MangoBotMixinBootstrapImpl implements IMixinServiceBootstrap {
     @Override
     public String getName() {
         return "MangoBotBootstrap";

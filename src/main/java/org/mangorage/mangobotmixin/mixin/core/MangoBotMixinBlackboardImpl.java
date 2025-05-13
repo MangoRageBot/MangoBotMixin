@@ -14,10 +14,10 @@ import java.util.Map;
  * @author vectrix
  * @since 1.0.0
  */
-public final class MixinBlackboardImpl implements IGlobalPropertyService {
+public final class MangoBotMixinBlackboardImpl implements IGlobalPropertyService {
     private final Map<IPropertyKey, Object> map = new HashMap<>();
 
-    public MixinBlackboardImpl() {
+    public MangoBotMixinBlackboardImpl() {
     }
 
     public record Key(String name) implements IPropertyKey {}
