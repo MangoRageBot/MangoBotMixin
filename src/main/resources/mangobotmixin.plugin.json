@@ -1,0 +1,6 @@
+{
+  "id": "mangobotmixin",
+  "name": "MangoBotMixin",
+  "type": "Mixin",
+  "version": "${mangobot_version}"
+}

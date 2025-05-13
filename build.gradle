@@ -1,0 +1,172 @@
+import org.mangorage.mangobotgradle.util.GitVersion
+
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        mavenLocal()
+        maven {
+            url = "https://maven.minecraftforge.net/"
+        }
+    }
+
+    dependencies {
+        classpath 'org.mangorage:MangoBotGradle:6.0.13'
+    }
+}
+
+plugins {
+    id 'org.gradlex.extra-java-module-info' version '1.12'
+}
+
+apply plugin: 'java'
+apply plugin: 'MangoBotGradle'
+apply plugin: 'maven-publish'
+
+group = 'org.mangorage'
+version = GitVersion.getGitVersion().getVersionAsString()
+
+println("Version: " + version)
+
+MangoBotConfig {
+    setJarTask(jar)
+
+    addRunConfig {
+        it.setName("runDevBot")
+        it.addArgs("--launchTarget", "mangobot")
+        it.addArgs("--dev")
+    }
+}
+
+extraJavaModuleInfo {
+    setDeriveAutomaticModuleNamesFromFileNames(true)
+    module("net.fabricmc:sponge-mixin", "org.spongepowered.mixin") {
+        preserveExisting()
+        exports("org.spongepowered.asm.mixin.transformer", "org.mangorage.mangobotmixin")
+        opens("org.spongepowered.asm.mixin.transformer", "org.mangorage.mangobotmixin")
+
+        exports("org.spongepowered.asm.transformers", "org.mangorage.mangobotmixin")
+    }
+
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+        url = 'https://maven.minecraftforge.net/'
+    }
+    maven {
+        url = "https://maven.fabricmc.net/"
+    }
+    maven {
+        url 'https://m2.dv8tion.net/releases'
+    }
+    maven {
+        url 'https://jitpack.io'
+    }
+    maven {
+        url = "https://maven.minecraftforge.net/"
+    }
+}
+
+
+dependencies {
+
+    installer('org.mangorage:installer:4.0.20')
+    bootstrap("org.mangorage:mangobotbootstrap:1.0.41-beta")
+
+    plugin("org.mangorage:mangobot:12.0.71")
+
+
+    // SpongeMixin...
+    library('net.fabricmc:sponge-mixin:0.13.4+mixin.0.8.5')
+
+    library('net.minecraftforge:modlauncher:10.2.4')
+    library('net.minecraftforge:securemodules:2.2.21')
+
+    library('org.ow2.asm:asm:9.8')
+    library('org.ow2.asm:asm-util:9.8')
+    library('org.ow2.asm:asm-analysis:9.8')
+    library('org.ow2.asm:asm-tree:9.8')
+    library('org.ow2.asm:asm-commons:9.8')
+}
+
+tasks.named('processResources', ProcessResources).configure {
+    var replaceProperties = [
+            mangobot_version: version
+    ]
+    inputs.properties replaceProperties
+
+    filesMatching(['mangobotcore.plugin.json']) {
+        expand replaceProperties + [project: project]
+    }
+}
+
+jar {
+    dependsOn configurations.embedLibrary
+
+    from {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        configurations.embedLibrary.collect {
+            zipTree(it)
+        }
+    } {
+        exclude "META-INF/*.RSA", "META-INF/*.SF", "META-INF/*.DSA"
+    }
+
+    manifest {
+        attributes(
+                'Main-Class': 'org.mangorage.mangobot.loader.Loader',
+                'ModuleMainClass': 'org.mangorage.mangobot.loader.Loader'
+        )
+    }
+}
+
+task sourcesJar(type: Jar) {
+    archiveClassifier.set("sources")
+    from sourceSets.main.allSource
+}
+
+publishing {
+    publications.register("mangobotaddon", MavenPublication) {
+        artifactId = 'mangobotmixin'
+        artifact jar
+        artifact sourcesJar
+
+        pom {
+            name = 'MangoBotMixin'
+            description = 'The Main Plugin For MangoBot'
+            url = 'https://github.com/MangoRageBot/MangoBot'
+            issueManagement {
+                system = 'github'
+                url = 'https://github.com/MangoRageBot/MangoBot/issues'
+            }
+            developers {
+                developer {
+                    id = 'mangorage'
+                    name = 'MangoRage'
+                }
+            }
+            withXml {
+                def dependencies = asNode().appendNode('dependencies')
+                configurations.library.getDependencies().each {
+                    def dependency = dependencies.appendNode('dependency')
+                    dependency.appendNode('groupId', it.group)
+                    dependency.appendNode('artifactId', it.name)
+                    dependency.appendNode('version', it.version)
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            url = "https://maven.minecraftforge.net/"
+
+            credentials {
+                username = System.getenv("MAVEN_USER")
+                password = System.getenv("MAVEN_PASSWORD")
+            }
+        }
+    }
+}
