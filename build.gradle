@@ -73,16 +73,14 @@ repositories {
 dependencies {
 
     installer('org.mangorage:installer:4.0.20')
-    bootstrap("org.mangorage:mangobotbootstrap:1.0.43-beta")
+    bootstrap("org.mangorage:mangobotbootstrap:1.0.45")
 
     plugin("org.mangorage:mangobot:12.0.72")
 
 
     // SpongeMixin...
-    library('net.fabricmc:sponge-mixin:0.13.4+mixin.0.8.5')
-
-    library('net.minecraftforge:modlauncher:10.2.4')
-    library('net.minecraftforge:securemodules:2.2.21')
+    library('net.fabricmc:sponge-mixin:0.15.4+mixin.0.8.7')
+    library('io.github.llamalad7:mixinextras-common:0.4.1')
 
     library('org.ow2.asm:asm:9.8')
     library('org.ow2.asm:asm-util:9.8')

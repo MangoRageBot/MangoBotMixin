@@ -6,11 +6,12 @@ module org.mangorage.mangobotmixin {
     requires org.spongepowered.mixin;
     requires org.mangorage.bootstrap;
     requires org.jetbrains.annotations;
+    requires mixinextras.common;
 
     exports org.mangorage.mangobotmixin.plugin to org.mangorage.mangobotcore;
-    exports org.mangorage.mangobotmixin.mixin.core to org.spongepowered.mixin;
-    exports org.mangorage.mangobotmixin.mixin to org.spongepowered.mixin;
-    exports org.mangorage.mangobotmixin.mixin.transformer to org.spongepowered.mixin;
+    exports org.mangorage.mangobotmixin.mixin.core to org.spongepowered.mixin, mixinextras.common;
+    exports org.mangorage.mangobotmixin.mixin to org.spongepowered.mixin, mixinextras.common;
+    exports org.mangorage.mangobotmixin.mixin.transformer to org.spongepowered.mixin, mixinextras.common;
 
 
     provides org.mangorage.bootstrap.api.transformer.IClassTransformer with SpongeMixinClassTransformerImpl;

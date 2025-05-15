@@ -1,5 +1,6 @@
 package org.mangorage.mangobotmixin.mixin;
 
+import com.llamalad7.mixinextras.MixinExtrasBootstrap;
 import org.mangorage.mangobotmixin.mixin.core.MangoBotMixinBootstrapImpl;
 import org.mangorage.mangobotmixin.mixin.core.MangoBotMixinServiceImpl;
 
@@ -50,6 +51,8 @@ public final class SpongeMixinImpl {
         MixinBootstrap.init();
 
         completeMixinBootstrap();
+
+        MixinExtrasBootstrap.init();
     }
 
     private static void completeMixinBootstrap() {
