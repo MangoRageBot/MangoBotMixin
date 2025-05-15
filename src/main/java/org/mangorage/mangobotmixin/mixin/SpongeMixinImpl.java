@@ -11,6 +11,8 @@ import org.spongepowered.asm.mixin.transformer.IMixinTransformerFactory;
 import java.lang.reflect.Method;
 
 public final class SpongeMixinImpl {
+    private static final boolean DEBUG = false;
+
     private static boolean loaded = false;
     private static IMixinTransformerFactory factory;
     private static IMixinTransformer transformer;
@@ -34,14 +36,16 @@ public final class SpongeMixinImpl {
         loaded = true;
 
         // Load
-//        System.setProperty("mixin.debug.verbose", "true");
-//        System.setProperty("mixin.debug", "true");
-//        System.setProperty("mixin.env.disableRefMap", "true");
-//        System.setProperty("mixin.checks", "true");
+
+        if (DEBUG) {
+            System.setProperty("mixin.debug.verbose", "true");
+            System.setProperty("mixin.debug", "true");
+            System.setProperty("mixin.env.disableRefMap", "true");
+            System.setProperty("mixin.checks", "true");
+        }
 
         System.setProperty("mixin.bootstrapService", MangoBotMixinBootstrapImpl.class.getName());
         System.setProperty("mixin.service", MangoBotMixinServiceImpl.class.getName());
-        System.setProperty("mixin.env.remapRefMap", "false");
 
         MixinBootstrap.init();
 

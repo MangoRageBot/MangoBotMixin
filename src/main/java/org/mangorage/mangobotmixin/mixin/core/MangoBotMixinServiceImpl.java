@@ -1,7 +1,7 @@
 package org.mangorage.mangobotmixin.mixin.core;
 
 import org.jetbrains.annotations.NotNull;
-import org.mangorage.bootstrap.api.loader.MangoLoader;
+import org.mangorage.bootstrap.api.loader.IMangoLoader;
 import org.mangorage.mangobotmixin.mixin.SpongeMixinImpl;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.Opcodes;
@@ -177,7 +177,7 @@ public final class MangoBotMixinServiceImpl implements IMixinService, IClassProv
 
     public @NotNull ClassNode getClassNode(final @NotNull String name, final boolean runTransformers, final int readerFlags) throws ClassNotFoundException, IOException {
         if(!runTransformers) throw new IllegalStateException("ClassNodes must always be provided transformed!");
-        MangoLoader loader = (MangoLoader) Thread.currentThread().getContextClassLoader();
+        IMangoLoader loader = (IMangoLoader) Thread.currentThread().getContextClassLoader();
 
         final String canonicalName = name.replace('/', '.');
         final String internalName = name.replace('.', '/');
@@ -212,8 +212,7 @@ public final class MangoBotMixinServiceImpl implements IMixinService, IClassProv
 
     @Override
     public boolean isClassLoaded(String name) {
-        final var loader = (MangoLoader) Thread.currentThread().getContextClassLoader();
-
+        final IMangoLoader loader = (IMangoLoader) Thread.currentThread().getContextClassLoader();
         return loader.hasClass(name);
     }
 

@@ -1,0 +1,23 @@
+name: Build MangoBotGradle
+on:
+  push:
+    branches: [ "master" ]
+    paths-ignore:
+      - 'README.md'
+      - 'settings.gradle'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    uses: MinecraftForge/SharedActions/.github/workflows/gradle.yml@v0
+    with:
+      java: 21
+      gradle_tasks: :publish
+      artifact_name: "MangoBotMixin"
+      author_icon_url: "https://avatars.githubusercontent.com/u/147930550"
+    secrets:
+      DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      MAVEN_USER: ${{ secrets.USERNAME }}  # Reference the secret
+      MAVEN_PASSWORD: ${{ secrets.PASSWORD }}  # Reference the secret
