@@ -1,4 +1,4 @@
-package org.mangorage.mangobotmixin.mixin;
+package org.mangorage.mangobotmixin.services;
 
 import org.mangorage.mangobotcore.plugin.api.IPluginInfoGetter;
 import org.mangorage.mangobotcore.plugin.api.Metadata;

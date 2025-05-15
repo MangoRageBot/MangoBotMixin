@@ -3,6 +3,7 @@ package org.mangorage.mangobotmixin.mixin.core;
 import org.jetbrains.annotations.NotNull;
 import org.mangorage.bootstrap.api.loader.IMangoLoader;
 import org.mangorage.mangobotmixin.mixin.SpongeMixinImpl;
+import org.mangorage.mangobotmixin.mixin.services.MangoBotMixinLoggerImpl;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;

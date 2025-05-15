@@ -1,4 +1,4 @@
-package org.mangorage.mangobotmixin.mixin.core;
+package org.mangorage.mangobotmixin.mixin.services;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

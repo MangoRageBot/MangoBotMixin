@@ -1,4 +1,4 @@
-package org.mangorage.mangobotmixin.mixin.core;
+package org.mangorage.mangobotmixin.mixin.services;
 
 import org.spongepowered.asm.logging.ILogger;
 import org.spongepowered.asm.logging.Level;
@@ -28,7 +28,7 @@ public class MangoBotMixinLoggerImpl extends LoggerAdapterAbstract {
         throwable.printStackTrace();
     }
 
-    public static void print(String message, Object... args) {
+    static void print(String message, Object... args) {
         for (Object arg : args) {
             message = message.replaceFirst("\\{}", arg == null ? "null" : arg.toString());
         }

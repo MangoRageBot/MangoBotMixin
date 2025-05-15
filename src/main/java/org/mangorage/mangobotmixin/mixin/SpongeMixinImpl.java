@@ -1,7 +1,7 @@
 package org.mangorage.mangobotmixin.mixin;
 
 import com.llamalad7.mixinextras.MixinExtrasBootstrap;
-import org.mangorage.mangobotmixin.mixin.core.MangoBotMixinBootstrapImpl;
+import org.mangorage.mangobotmixin.mixin.services.MangoBotMixinBootstrapImpl;
 import org.mangorage.mangobotmixin.mixin.core.MangoBotMixinServiceImpl;
 
 import org.spongepowered.asm.launch.MixinBootstrap;

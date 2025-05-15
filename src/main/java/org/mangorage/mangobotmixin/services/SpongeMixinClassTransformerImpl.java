@@ -1,4 +1,4 @@
-package org.mangorage.mangobotmixin.mixin.transformer;
+package org.mangorage.mangobotmixin.services;
 
 import org.mangorage.bootstrap.api.transformer.IClassTransformer;
 import org.mangorage.bootstrap.api.transformer.TransformResult;

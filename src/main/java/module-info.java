@@ -1,6 +1,3 @@
-import org.mangorage.mangobotmixin.mixin.core.MangoBotMixinBlackboardImpl;
-import org.mangorage.mangobotmixin.mixin.transformer.SpongeMixinClassTransformerImpl;
-
 module org.mangorage.mangobotmixin {
     requires org.mangorage.mangobotcore;
     requires org.spongepowered.mixin;
@@ -11,15 +8,30 @@ module org.mangorage.mangobotmixin {
     exports org.mangorage.mangobotmixin.plugin to org.mangorage.mangobotcore;
     exports org.mangorage.mangobotmixin.mixin.core to org.spongepowered.mixin, mixinextras.common;
     exports org.mangorage.mangobotmixin.mixin to org.spongepowered.mixin, mixinextras.common;
-    exports org.mangorage.mangobotmixin.mixin.transformer to org.spongepowered.mixin, mixinextras.common;
+    exports org.mangorage.mangobotmixin.mixin.services to mixinextras.common, org.spongepowered.mixin;
+    exports org.mangorage.mangobotmixin.services to mixinextras.common, org.spongepowered.mixin, org.mangorage.bootstrap;
 
 
-    provides org.mangorage.bootstrap.api.transformer.IClassTransformer with SpongeMixinClassTransformerImpl;
-    provides org.spongepowered.asm.service.IGlobalPropertyService with MangoBotMixinBlackboardImpl;
+    // Bootstrap Services
+    provides org.mangorage.bootstrap.api.module.IModuleConfigurator with org.mangorage.mangobotmixin.services.ModuleConfigService;
+    provides org.mangorage.bootstrap.api.transformer.IClassTransformer with org.mangorage.mangobotmixin.services.SpongeMixinClassTransformerImpl;
+
+    // MangoBot Services
     provides org.mangorage.mangobotcore.plugin.api.Plugin with org.mangorage.mangobotmixin.plugin.MangoBotMixinPlugin;
-    provides org.mangorage.mangobotcore.plugin.api.IPluginInfoGetter with org.mangorage.mangobotmixin.mixin.MetadataInfoGrabberImpl;
+    provides org.mangorage.mangobotcore.plugin.api.IPluginInfoGetter with org.mangorage.mangobotmixin.services.MetadataInfoGrabberImpl;
 
+    // Mixin Service
+    provides org.spongepowered.asm.service.IGlobalPropertyService with org.mangorage.mangobotmixin.mixin.services.MangoBotMixinBlackboardImpl;
+
+
+    // Bootstrap Services
     uses org.mangorage.bootstrap.api.transformer.IClassTransformer;
-    uses org.spongepowered.asm.service.IGlobalPropertyService;
+    uses org.mangorage.bootstrap.api.module.IModuleConfigurator;
+
+    // MangoBot Services
     uses org.mangorage.mangobotcore.plugin.api.Plugin;
+    uses org.mangorage.mangobotcore.plugin.api.IPluginInfoGetter;
+
+    // Mixin Service
+    uses org.spongepowered.asm.service.IGlobalPropertyService;
 }

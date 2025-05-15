@@ -73,7 +73,7 @@ repositories {
 dependencies {
 
     installer('org.mangorage:installer:4.0.20')
-    bootstrap("org.mangorage:mangobotbootstrap:1.0.45")
+    bootstrap("org.mangorage:mangobotbootstrap:1.0.46")
 
     plugin("org.mangorage:mangobot:12.0.72")
 

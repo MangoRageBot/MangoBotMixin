@@ -44,11 +44,11 @@ public final class MangoBotMixinContainerImpl extends ContainerHandleVirtual {
         return "MixinContainer{name=" + this.getName() + "}";
     }
 
-    /* package */ static class ResourceContainer extends ContainerHandleURI {
+   static class ResourceContainer extends ContainerHandleURI {
         private final String name;
         private final Path path;
 
-        /* package */ ResourceContainer(final @NotNull String name, final @NotNull Path path) {
+        ResourceContainer(final @NotNull String name, final @NotNull Path path) {
             super(path.toUri());
 
             this.name = name;
