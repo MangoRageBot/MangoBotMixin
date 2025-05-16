@@ -95,7 +95,7 @@ tasks.named('processResources', ProcessResources).configure {
     ]
     inputs.properties replaceProperties
 
-    filesMatching(['mangobotcore.plugin.json']) {
+    filesMatching(['*.plugin.json']) {
         expand replaceProperties + [project: project]
     }
 }
