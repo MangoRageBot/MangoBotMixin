@@ -8,6 +8,7 @@ import java.util.List;
 public final class ModuleConfigService implements IModuleConfigurator {
     @Override
     public void configureModuleLayer(IModuleLayer moduleLayer) {
+
         // Common Stuff that both modules need...
         moduleLayer.addOpens(
                 "org.spongepowered.mixin",
