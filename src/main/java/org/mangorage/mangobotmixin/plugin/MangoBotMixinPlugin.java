@@ -1,7 +1,8 @@
 package org.mangorage.mangobotmixin.plugin;
 
-import org.mangorage.mangobotcore.plugin.api.MangoBotPlugin;
-import org.mangorage.mangobotcore.plugin.api.Plugin;
+
+import org.mangorage.mangobotcore.api.plugin.v1.MangoBotPlugin;
+import org.mangorage.mangobotcore.api.plugin.v1.Plugin;
 
 @MangoBotPlugin(id = MangoBotMixinPlugin.ID)
 public final class MangoBotMixinPlugin implements Plugin {

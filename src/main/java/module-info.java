@@ -17,8 +17,8 @@ module org.mangorage.mangobotmixin {
     provides org.mangorage.bootstrap.api.transformer.IClassTransformer with org.mangorage.mangobotmixin.services.SpongeMixinClassTransformerImpl;
 
     // MangoBot Services
-    provides org.mangorage.mangobotcore.plugin.api.Plugin with org.mangorage.mangobotmixin.plugin.MangoBotMixinPlugin;
-    provides org.mangorage.mangobotcore.plugin.api.IPluginInfoGetter with org.mangorage.mangobotmixin.services.MetadataInfoGrabberImpl;
+    provides org.mangorage.mangobotcore.api.plugin.v1.Plugin with org.mangorage.mangobotmixin.plugin.MangoBotMixinPlugin;
+    provides org.mangorage.mangobotcore.api.plugin.v1.IPluginInfoGetter with org.mangorage.mangobotmixin.services.MetadataInfoGrabberImpl;
 
     // Mixin Service
     provides org.spongepowered.asm.service.IGlobalPropertyService with org.mangorage.mangobotmixin.mixin.services.MangoBotMixinBlackboardImpl;
@@ -29,8 +29,8 @@ module org.mangorage.mangobotmixin {
     uses org.mangorage.bootstrap.api.module.IModuleConfigurator;
 
     // MangoBot Services
-    uses org.mangorage.mangobotcore.plugin.api.Plugin;
-    uses org.mangorage.mangobotcore.plugin.api.IPluginInfoGetter;
+    uses org.mangorage.mangobotcore.api.plugin.v1.Plugin;
+    uses org.mangorage.mangobotcore.api.plugin.v1.IPluginInfoGetter;
 
     // Mixin Service
     uses org.spongepowered.asm.service.IGlobalPropertyService;

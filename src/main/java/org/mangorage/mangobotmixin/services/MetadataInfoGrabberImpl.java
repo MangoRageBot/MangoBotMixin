@@ -1,7 +1,7 @@
 package org.mangorage.mangobotmixin.services;
 
-import org.mangorage.mangobotcore.plugin.api.IPluginInfoGetter;
-import org.mangorage.mangobotcore.plugin.api.Metadata;
+import org.mangorage.mangobotcore.api.plugin.v1.IPluginInfoGetter;
+import org.mangorage.mangobotcore.api.plugin.v1.Metadata;
 import org.spongepowered.asm.mixin.Mixins;
 
 import java.util.List;
