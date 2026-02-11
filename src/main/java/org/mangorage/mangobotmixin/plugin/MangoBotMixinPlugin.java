@@ -15,5 +15,6 @@ public final class MangoBotMixinPlugin implements Plugin {
 
     @Override
     public void load() {
+        System.out.println("Loaded MangoBotMixinPlugin");
     }
 }
