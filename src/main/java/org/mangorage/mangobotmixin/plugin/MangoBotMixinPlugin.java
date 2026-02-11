@@ -20,15 +20,19 @@ public final class MangoBotMixinPlugin implements Plugin {
         System.out.println("Loaded MangoBotMixinPlugin");
         IMangoLoader mangoLoader = (IMangoLoader) this.getClass().getClassLoader();
 
-        final var history = mangoLoader.getTransformerHistory().getHistory("org.mangorage.mangobotcore.internal.ExampleThing");
-        final var result = history.get(1);
+        final var transformerHistory = mangoLoader.getTransformerHistory();
+        if (transformerHistory != null) {
+            final var history = transformerHistory.getHistory("org.mangorage.mangobotcore.internal.ExampleThing");
+            if (history == null || history.size() == 1) return;
 
-        System.out.println("Transformed class bytes:");
-        ClassReader cr = new ClassReader(result.transformerResult());
-        cr.accept(new org.objectweb.asm.util.TraceClassVisitor(new java.io.PrintWriter(System.out)), 0);
+            final var result = history.get(1);
+            System.out.println("Transformed class bytes:");
+            ClassReader cr = new ClassReader(result.transformerResult());
+            cr.accept(new org.objectweb.asm.util.TraceClassVisitor(new java.io.PrintWriter(System.out)), 0);
 
-        System.out.println("Original class bytes:");
-        ClassReader cr2 = new ClassReader(result.classData());
-        cr2.accept(new org.objectweb.asm.util.TraceClassVisitor(new java.io.PrintWriter(System.out)), 0);
+            System.out.println("Original class bytes:");
+            ClassReader cr2 = new ClassReader(result.classData());
+            cr2.accept(new org.objectweb.asm.util.TraceClassVisitor(new java.io.PrintWriter(System.out)), 0);
+        }
     }
 }
