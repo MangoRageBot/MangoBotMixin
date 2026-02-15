@@ -41,6 +41,7 @@ public final class ModuleConfigService implements IModuleConfigurator {
                         "org.spongepowered.asm.mixin.transformer.ext.extensions",
                         "org.spongepowered.asm.mixin.injection.struct",
                         "org.spongepowered.asm.mixin.transformer.ext",
+                        "org.spongepowered.asm.mixin.injection",
                         "org.spongepowered.asm.transformers",
                         "org.spongepowered.asm.mixin"
                 ),
