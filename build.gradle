@@ -81,8 +81,8 @@ dependencies {
 
 
     // SpongeMixin...
-    library('net.fabricmc:sponge-mixin:0.15.4+mixin.0.8.7')
-    library('io.github.llamalad7:mixinextras-common:0.4.1')
+    library('net.fabricmc:sponge-mixin:0.17.0+mixin.0.8.7')
+    library('io.github.llamalad7:mixinextras-common:0.5.3')
 
     library("com.google.code.gson:gson:2.10.1")
     library('org.ow2.asm:asm:9.8')
