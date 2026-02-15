@@ -23,7 +23,7 @@ public final class MangoBotMixinPlugin implements Plugin {
         final var transformerHistory = mangoLoader.getTransformerHistory();
         if (transformerHistory != null) {
             final var history = transformerHistory.getHistory("org.mangorage.mangobotcore.internal.ExampleThing");
-            if (history == null || history.size() == 1) return;
+            if (history == null || history.size() <= 1) return;
 
             final var result = history.get(1);
             System.out.println("Transformed class bytes:");
